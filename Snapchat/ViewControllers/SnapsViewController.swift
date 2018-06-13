@@ -24,6 +24,7 @@ class SnapsViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             self.snaps.append(snap)
             self.tableView.reloadData()
             
+            self.alerta(title: "Bienvenido a SnapChat", message: "Disfrute de nuestra aplicacion en tiempo real")
         })
         Database.database().reference().child("usuarios").child(Auth.auth().currentUser!.uid).child("snaps").observe(DataEventType.childRemoved, with: {(snapshot) in
             var interador = 0
@@ -74,6 +75,15 @@ class SnapsViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             let siguienteVC = segue.destination as! VerSnapViewController
             siguienteVC.snap = sender as! Snap
         }
+    }
+    
+    func alerta (title: String, message:String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(action) in
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     

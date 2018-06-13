@@ -17,15 +17,20 @@ class iniciarSesionViewController: UIViewController {
     override func viewDidLoad() {
        
         super.viewDidLoad()
+        btnInit.layer.cornerRadius = 10
         
     }
 
+    @IBOutlet weak var btnInit: UIButton!
+    
+    
     @IBAction func iniciarSesionTapped(_ sender: Any) {
     
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
            print("Intentamos Iniciar Sesion")
             if error != nil {
                 print("Tenemos el siguiente error\(String(describing: error))")
+                self.alerta(title: "Autenticacion Fallida", message: "Ingrese sus crendenciales validas")
                 Auth.auth().createUser(withEmail: self.emailTextField.text!, password: self.passwordTextField.text!) { (user,error) in
                     print("Intentamos crear un usuario")
                     if error != nil {
@@ -45,6 +50,14 @@ class iniciarSesionViewController: UIViewController {
         
     }
    
+    func alerta (title: String, message:String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(action) in
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
 
 }
 
